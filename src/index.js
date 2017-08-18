@@ -8,21 +8,20 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import reducer from './reducers/index'
+import reducer from './reducers/index';
 import {
   BrowserRouter as Router,
   Route,
   Link,
   Switch,
-  Redirect
-} from 'react-router-dom'
+  Redirect,
+} from 'react-router-dom';
 
-const store = createStore(reducer,composeWithDevTools(applyMiddleware(thunk)));
-
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <App/>
+      <App />
     </Router>
   </Provider>, document.getElementById('root'));
 registerServiceWorker();

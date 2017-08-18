@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 
+import AppBar from 'material-ui/AppBar'
 import {connect} from 'react-redux'
 import * as constants from './constants/actions'
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap/dist/js/bootstrap.min';
 import './App.css';
 import LoginPage from './containers/Login'
 import {saveUser} from "./actions/authorizedUser"
+import FlatButton from 'material-ui/FlatButton'
 import {defineUser} from "./actions/authorizedUser"
 import {withRouter} from 'react-router-dom'
 import {logOut} from "./actions/authorizedUser"
 import HomePage from './containers/Home'
 import Page from './containers/Page'
+import io from 'socket.io-client';
 
 import axios from 'axios';
 import {
@@ -25,8 +29,14 @@ import {
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
+export
+const  socket = io.connect("http://localhost:3000");
 
 class App extends Component {
+
+  componentDidMount() {
+
+  }
 
 
   componentWillMount(){
@@ -86,15 +96,27 @@ class App extends Component {
 
     return (
       <div>
-        <Router>
-          <div>
-            <Route path="/login" component={LoginPage}/>
-            <Route exact path="/home" component={HomePage}/>
-            <Route path="/home/:id" component={Page}/>
-            {this.getRedirect()}
+        <MuiThemeProvider>
+          <Router>
+            <div>
+              {this.props.isAuth === false ? null :
+                <AppBar title="Smart House"
+                        iconElementRight={<FlatButton label="log out"
+                                                      onTouchTap={() => {this.props.logOut().then(() => {
+                                                        this.props.history.replace('/login')
+                                                      })}}
 
-          </div>
-        </Router>
+                        />}
+                />
+                }
+              <Route path="/login" component={LoginPage}/>
+              <Route exact path="/home" component={HomePage}/>
+              <Route path="/home/:id" component={Page}/>
+              {this.getRedirect()}
+
+            </div>
+          </Router>
+        </MuiThemeProvider>
       </div>
     );
   }
@@ -117,12 +139,10 @@ export default withRouter(connect(
       const brokeSession = () => {
 
         return (dispatch) => {
-          console.log("You are loggin out");
           return axios.post("http://localhost:3002/logoutpage").then(() => {
             dispatch(logOut());
             dispatch(defineUser(false));
 
-            console.log("YOU ARE LOGGED OUT")
           }).catch(err => {
             dispatch({type:constants.USER_NOT_RECEIVED})
           });

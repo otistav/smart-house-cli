@@ -21,7 +21,9 @@
     "react-window-size": "^1.1.0",
     "redux": "3.7.1",
     "redux-devtools-extension": "2.13.2",
-    "redux-thunk": "2.2.0"
+    "redux-thunk": "2.2.0",
+    "socket.io": "^2.0.3",
+    "socket.io-client": "^2.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -31,6 +33,7 @@
   },
   "proxy": "http://localhost:3000",
   "devDependencies": {
+    "eslint": "^4.4.1",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
