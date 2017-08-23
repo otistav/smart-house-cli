@@ -12,6 +12,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import { getIcons } from '../actions/pages';
 import Menu from 'material-ui/Menu';
+import Slider from 'material-ui/Slider';
 import SelectField from 'material-ui/SelectField';
 import windowSize from 'react-window-size';
 import MenuItem from 'material-ui/MenuItem';
@@ -26,7 +27,7 @@ import { Icon } from 'react-fa';
 import { BaseControl } from '../components/BaseControl';
 import houseState from '../reducers/houseState';
 
-class LightButton extends Component {
+class MySlider extends Component {
   componentDidMount() {
 
   }
@@ -39,22 +40,22 @@ class LightButton extends Component {
 
 
   render() {
-    console.log("this is houseState",this.props.houseState)
     return (
       <BaseControl
         blockWidth={this.props.blockWidth}
         item={this.props.item}
       >
-        <FlatButton
-          label={this.props.label}
-          style={{ width: '100%',
-            height: '100%',
-            border: 'yellow 1px solid',
-            backgroundColor: (this.getProp()) ? 'yellow' : 'white' }}
-          icon={<FontAwesome name="lightbulb-o" />}
-          onClick={() => {
+        <Slider
+          style={{ height: '100%', position: 'relative', top: '40%' }}
+          max={255}
+          value={this.props.houseState.bedRoomLightLevel}
+          step={1}
+
+          onChange={(event, value) => {
+            console.log(value);
             socket.emit('redux', {
               id: this.props.item.id,
+              payload: value,
             });
           }}
         />
@@ -75,4 +76,4 @@ export default windowSize(withRouter(connect(
 
   }),
 
-)(LightButton)));
+)(MySlider)));

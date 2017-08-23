@@ -47,8 +47,10 @@ class App extends Component {
     }).catch(() => {
       this.props.defineUser(false)
 
-    })
+    });
+    this.getRedirect()
   }
+  //todo
 
   getRedirect = () => {
     if (this.props.isAuth === false) {
@@ -101,6 +103,9 @@ class App extends Component {
             <div>
               {this.props.isAuth === false ? null :
                 <AppBar title="Smart House"
+                        iconElementLeft={<FlatButton label="home"
+                                                     containerElement={<Link to="/home/"/>}
+                        />}
                         iconElementRight={<FlatButton label="log out"
                                                       onTouchTap={() => {this.props.logOut().then(() => {
                                                         this.props.history.replace('/login')

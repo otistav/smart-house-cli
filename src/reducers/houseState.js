@@ -1,11 +1,10 @@
 import * as constants from '../constants/actions';
 
-export default function houseState(state = { lightState: { lightState: false } }, action) {
+export default function houseState(state = {}, action) {
   switch (action.type) {
-    case 'LIGHT_STATUS_RECEIVED': {
-      return {
-        lightState: action.payload,
-      };
+
+    case 'STATE_REFRESHED': {
+      return Object.assign({}, state, action.payload)
     }
     default: return state;
   }

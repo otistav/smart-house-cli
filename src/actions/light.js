@@ -1,8 +1,8 @@
 
 
-export function saveLightStatus(status) {
+export function saveStatus(status) {
   return {
-    type: 'LIGHT_STATUS_RECEIVED',
+    type: 'STATE_REFRESHED',
     payload: status,
   };
 }

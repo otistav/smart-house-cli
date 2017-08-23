@@ -8,13 +8,10 @@ export function getPages(pages) {
   };
 }
 
-export function saveLightStatus(status) {
-  return {
-    type: 'LIGHT_STATUS_RECEIVED',
-    payload: status,
-  };
-}
-
+export
+const getState = () => dispatch => axios.get('http://localhost:3002/getState').then((res) => {
+  dispatch({ type: 'STATE_REFRESHED', payload: res });
+});
 
 export
 const dispatchPages = () => dispatch => axios.get('http://localhost:3002/pages').then((res) => {
