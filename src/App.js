@@ -50,7 +50,6 @@ class App extends Component {
     });
     this.getRedirect()
   }
-  //todo
 
   getRedirect = () => {
     if (this.props.isAuth === false) {

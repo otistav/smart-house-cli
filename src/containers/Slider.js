@@ -28,37 +28,37 @@ import { BaseControl } from '../components/BaseControl';
 import houseState from '../reducers/houseState';
 
 class MySlider extends Component {
-  componentDidMount() {
-
-  }
-
   getProp() {
     const func = new Function('houseState', this.props.item.propFunction);
-    console.log(func(this.props.houseState));
     return func(this.props.houseState);
   }
 
 
   render() {
     return (
+
       <BaseControl
         blockWidth={this.props.blockWidth}
         item={this.props.item}
       >
-        <Slider
-          style={{ height: '100%', position: 'relative', top: '40%' }}
-          max={255}
-          value={this.props.houseState.bedRoomLightLevel}
-          step={1}
+        <div className="test" style={{ position: 'absolute', top: '40%' }}>
+          <div style={{ font: 'bolder', fontSize: '100%' }}>
+            {this.props.label}
+          </div>
+          <Slider
+            style={{ marginLeft: '10%', width: '80%' }}
+            max={1}
+            value={this.getProp()}
+            step={0.01}
 
-          onChange={(event, value) => {
-            console.log(value);
-            socket.emit('redux', {
-              id: this.props.item.id,
-              payload: value,
-            });
-          }}
-        />
+            onChange={(event, value) => {
+              socket.emit('redux', {
+                id: this.props.item.id,
+                payload: value,
+              });
+            }}
+          />
+        </div>
       </BaseControl>
     );
   }

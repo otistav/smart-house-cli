@@ -12,6 +12,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import { getIcons } from '../actions/pages';
 import Menu from 'material-ui/Menu';
+import Slider from 'material-ui/Slider';
 import SelectField from 'material-ui/SelectField';
 import windowSize from 'react-window-size';
 import MenuItem from 'material-ui/MenuItem';
@@ -26,54 +27,20 @@ import { Icon } from 'react-fa';
 import { BaseControl } from '../components/BaseControl';
 import houseState from '../reducers/houseState';
 
-class LightButton extends Component {
-  getProp() {
-    const func = new Function('houseState', this.props.item.propFunction);
-    return func(this.props.houseState);
+class Info extends Component {
+  componentDidMount() {
+
   }
-  getIconSize(width) {
-
-    if (width >= 85 && width <= 122) return 1;
-    if (width > 122 && width <= 170) return 2;
-    if (width > 170 && width <= 200) return 3;
-    if (width > 200 && width <= 250) return 4;
-    return 5;
-  }
-
-
   render() {
-    console.log('this is icon size', this.getIconSize());
-    console.log('this is block width', this.props.blockWidth);
+    console.log(this.props.houseState.time);
     return (
       <BaseControl
         blockWidth={this.props.blockWidth}
         item={this.props.item}
       >
-        <FlatButton
-          icon={
-            <div className="f">
-              <FontAwesome
-                style={{
-                  color: (this.getProp()) ? 'yellow' : 'initial' }}
-                name="lightbulb-o"
-                size={`${this.getIconSize(this.props.blockWidth)}x`}
-              /><br />
-              {this.props.label}
-            </div>
-
-          }
-          style={{
-            width: '100%',
-            height: '100%',
-            border: 'yellow 1px solid',
-          }}
-
-          onClick={() => {
-            socket.emit('redux', {
-              id: this.props.item.id,
-            });
-          }}
-        />
+        <div style={{ width: '100%', height: '100%', fontSize: '40px', position: 'relative', top: '40%', left: '30%' }}>
+          {this.props.houseState.time}
+        </div>
       </BaseControl>
     );
   }
@@ -91,4 +58,4 @@ export default windowSize(withRouter(connect(
 
   }),
 
-)(LightButton)));
+)(Info)));

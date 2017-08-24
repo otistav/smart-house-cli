@@ -10,6 +10,7 @@ import LightButton from './LightButton';
 import SoundButton from './SoundButton';
 import { socket } from '../App';
 import WaterButton from './WaterButton';
+import Info from './Info'
 import AirConditionButton from './AirConditionButton';
 import MySlider from './Slider';
 
@@ -28,6 +29,7 @@ class Page extends Component {
       airConditioningButton: '6f0257d4-8664-4435-8054-5d5255b67623',
       waterButton: 'cdf6533e-7ed4-4b65-87f1-83c7622d1ed3',
       slider: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380c41',
+      info: 'a0eaac99-9c0b-4ff8-bb6d-6bb9bd380c41',
     };
   }
 
@@ -52,6 +54,9 @@ class Page extends Component {
       case this.controlTypes.slider: {
         return <MySlider label={item.name} item={item} blockWidth={this.state.blockWidth} />;
       }
+      case this.controlTypes.info: {
+        return <Info label={item.name} item={item} blockWidth={this.state.blockWidth} />;
+      }
       default: return null;
     }
   }
@@ -59,9 +64,8 @@ class Page extends Component {
 
   componentDidMount() {
     // this.props.getState();
-    socket.emit('redux', { storeReq: true })
+    socket.emit('redux', { storeReq: true });
     socket.on('redux', (data) => {
-      console.log("this is data data",data);
       this.props.saveStatus(data);
     });
     this.props.getCurrentPageControl(this.props.match.params.id);
